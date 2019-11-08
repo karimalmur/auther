@@ -11,4 +11,8 @@ Gem::Specification.new do |s|
   s.files       = ["lib/auther.rb"]
   s.homepage    = "https://rubygems.org/gems/auther"
   s.license     = "MIT"
+
+  s.add_dependency "bcrypt", ">= 3.1.11"
+  s.add_dependency "jwt", "~> 2.2", ">= 2.2.1"
+  s.add_dependency "rack", "~> 2.0", ">= 2.0.7"
 end
