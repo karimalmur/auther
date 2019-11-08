@@ -1,4 +1,7 @@
 # frozen_string_literal: true
 
-class Auther
-end
+require "auther/middleware"
+require "auther/auther"
+require "auther/authentication/password_strategy"
+
+module Auther; end
