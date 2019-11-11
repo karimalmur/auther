@@ -45,6 +45,43 @@ RSpec.describe Auther::Resource do
       end
     end
 
+    context "when validate_confirmation is true" do
+      context "when password_confirmation is invalid" do
+        it "returns invalid_password_confirmation error" do
+          result = user.set_password(
+            "password",
+            password_confirmation: nil,
+            validate_confirmation: true
+          )
+
+          expect(result.failure?).to be(true)
+          expect(result.failure.type).to eq(Auther::Resource::ERROR_INVALID_PASSWORD_CONFIRMATION)
+
+          result = user.set_password(
+            "password",
+            password_confirmation: "wrong",
+            validate_confirmation: true
+          )
+
+          expect(result.failure?).to be(true)
+          expect(result.failure.type).to eq(Auther::Resource::ERROR_INVALID_PASSWORD_CONFIRMATION)
+        end
+      end
+
+      context "when password_confirmation is valid" do
+        it "returns success with the hashed password" do
+          result = user.set_password(
+            "password",
+            password_confirmation: "password",
+            validate_confirmation: true
+          )
+
+          expect(result.success?).to be(true)
+          expect(Auther::Encryption.compare_password(result.value!, "password")).to be(true)
+        end
+      end
+    end
+
     context "when password is valid" do
       it "returns the hashed password" do
         result = user.set_password("my*password")
