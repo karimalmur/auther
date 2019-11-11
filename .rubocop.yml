@@ -10,3 +10,13 @@ Style/StringLiterals:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#consistent-string-literals'
   EnforcedStyle: double_quotes
   Enabled: true
+
+Style/MethodMissingSuper:
+  Enabled: false
+
+Metrics/BlockLength:
+  CountComments: false  # count full line comments?
+  Max: 25
+  ExcludedMethods: []
+  Exclude:
+    - "spec/**/*"
