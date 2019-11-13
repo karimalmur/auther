@@ -54,14 +54,15 @@ module Auther
     # @param [Boolean] validate_confirmation(Option):
     #   If true, __Auther__ will validate the equality of __password__ and __password_confirmation__.
     #   Otherwise, __Auther__ will ignore __password_confirmation__. Default: false.
-    # @return Result::Success[String]: Hashed password.
+    # @return Result::Success[Resource]: self.
     # @errors [ERROR_PASSWORD_CANT_BE_NIL, ERROR_PASSWORD_TO_LONG].
     def set_password(password, password_confirmation: nil, validate_confirmation: false)
       yield validated_password_presence(password)
       yield validated_password_length(password)
       yield validated_password_confirmation(password, password_confirmation, validate_confirmation)
 
-      Success(self.password_digest = ::Auther::Encryption.password_digest(password))
+      self.password_digest = ::Auther::Encryption.password_digest(password)
+      Success(self)
     end
 
     # Returns +self+ if the password is correct, otherwise +false+.

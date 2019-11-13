@@ -69,7 +69,7 @@ RSpec.describe Auther::Resource do
       end
 
       context "when password_confirmation is valid" do
-        it "returns success with the hashed password" do
+        it "returns success with the resource" do
           result = user.set_password(
             "password",
             password_confirmation: "password",
@@ -77,7 +77,10 @@ RSpec.describe Auther::Resource do
           )
 
           expect(result.success?).to be(true)
-          expect(Auther::Encryption.compare_password(result.value!, "password")).to be(true)
+          expect(result.success).to eq(user)
+          expect(
+            Auther::Encryption.compare_password(result.success.password_digest, "password")
+          ).to be(true)
         end
       end
     end
