@@ -21,5 +21,10 @@ module Auther
     def self.compare_password(password_digest, password)
       BCrypt::Password.new(password_digest).is_password?(password)
     end
+
+    def self.secure_token(length = 20)
+      length = (length * 3) / 4 # The length of the resulting string is about 4/3 of n.
+      SecureRandom.urlsafe_base64(length).tr("lIO0", "sxyz")
+    end
   end
 end
