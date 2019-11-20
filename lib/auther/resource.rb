@@ -34,7 +34,10 @@ module Auther
     include Dry::Monads[:result, :do]
 
     def self.included(base)
-      base.class_eval { attr_reader :password }
+      base.class_eval do
+        attr_accessor :password
+        attr_reader :password_digest
+      end
     end
 
     # Borrowed from SecurePassword - Rails
@@ -75,6 +78,10 @@ module Auther
     end
 
     protected
+
+    def password_digest=(value)
+      @password_digest = value
+    end
 
     def validated_password_presence(password)
       return Success() unless password.nil?

@@ -26,6 +26,18 @@ RSpec.describe ::Auther::Confirmable do
         expect(result.failure?).to be(true)
         expect(result.failure.type).to eq(::Auther::Confirmable::ERROR_INVALID_CONFIRMATION_TOKEN)
       end
+
+      context "when confirmation_token is not set or provided token is nil" do
+        before(:each) do
+          user.confirmation_token = nil
+        end
+
+        it "returns invalid_confirmation_token error" do
+          result = user.confirm(nil)
+          expect(result.failure?).to be(true)
+          expect(result.failure.type).to eq(::Auther::Confirmable::ERROR_INVALID_CONFIRMATION_TOKEN)
+        end
+      end
     end
 
     context "when token is expired" do
@@ -59,6 +71,7 @@ RSpec.describe ::Auther::Confirmable do
 
     context "when confirmation token is valid and not expired and resource is not confirmed" do
       before(:each) do
+        user.set_confirmation_details
         @result = user.confirm(user.confirmation_token)
       end
 

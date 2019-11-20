@@ -1,34 +1,13 @@
 # frozen_string_literal: true
 
 RSpec.describe Auther::Resource do
-  with_model :User do
-    table do |t|
-      t.string :email
-      t.string :password_digest
-    end
+  class User
+    include Auther::Resource
   end
 
-  with_model :InvalidUser do
-    table do |t|
-      t.string :email
-    end
-  end
-
-  before(:each) do
-    User.include Auther::Resource
-    InvalidUser.include Auther::Resource
-  end
-
-  let(:user) { User.new(email: "some@email.com") }
-  let(:invalid_user) { InvalidUser.new(email: "some@email.com") }
+  let(:user) { User.new }
 
   describe "#set_password" do
-    context "when resource does not have a password_digest setter" do
-      it "raises an error" do
-        expect { invalid_user.set_password("password") }.to raise_error(NoMethodError)
-      end
-    end
-
     context "when password is nil" do
       it "returns password_cant_be_nil error" do
         result = user.set_password(nil)
@@ -89,7 +68,9 @@ RSpec.describe Auther::Resource do
       it "returns the hashed password" do
         result = user.set_password("my*password")
         expect(result.success?).to be(true)
-        expect(Auther::Encryption.compare_password(result.value!, "my*password")).to be(true)
+        expect(
+          Auther::Encryption.compare_password(result.success.password_digest, "my*password")
+        ).to be(true)
       end
     end
   end

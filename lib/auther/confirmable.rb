@@ -40,7 +40,7 @@ module Auther
     protected
 
     def validated_confirmation_token(token)
-      return Success() if token == confirmation_token
+      return Success() if token == confirmation_token && token&.empty? == false
 
       Failure(
         Error.new(
