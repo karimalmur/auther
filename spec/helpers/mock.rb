@@ -33,12 +33,10 @@ module Auther
         def app
           @app ||= begin
             opts = {
-              failure_app: -> { [401, { "Content-Type" => "text/plain" }, ["You Fail!"]] },
-              default_strategies: :password
+              failure_app: -> { [401, { "Content-Type" => "text/plain" }, ["You Fail!"]] }
             }
 
             Rack::Builder.new do
-              use Mock::Session
               use Auther::Middleware, opts, &proc {}
               run -> { [200, { "Content-Type" => "text/plain" }, ["You Win"]] }
             end

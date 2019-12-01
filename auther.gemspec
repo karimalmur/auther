@@ -8,7 +8,6 @@ Gem::Specification.new do |s|
   s.description = "Token-based Authentication for Rails apps"
   s.authors = ["Karim Almur"]
   s.email = "karimit.g@gmail.com"
-  s.files = %w[lib/auther.rb]
   s.homepage = "https://rubygems.org/gems/auther"
   s.license = "MIT"
 
@@ -21,4 +20,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "simplecov", "~> 0.17.1"
   s.add_development_dependency "sqlite3", "~> 1.4", ">= 1.4.1"
   s.add_development_dependency "with_model", "~> 2.1", ">= 2.1.2"
+
+  s.files = `git ls-files`.split("\n")
+  s.test_files    = `git ls-files -- {spec}/*`.split("\n")
+  s.require_paths = ["lib"]
 end

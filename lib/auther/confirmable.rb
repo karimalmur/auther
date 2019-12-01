@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "dry/monads"
-require_relative "util/error"
+require_relative "util/errors"
 
 module Auther
   module Confirmable

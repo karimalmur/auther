@@ -5,6 +5,15 @@ module Auther
     module Helpers
       FAILURE_APP = ->(_) { [401, { "Content-Type" => "text/plain" }, ["You Fail!"]] }
 
+      def run_rack_app(params = {}, path = "/")
+        env = env_with_params(path, params)
+        app = lambda do |e|
+          yield(e)
+        end
+
+        setup_rack(app).call(env)
+      end
+
       def env_with_params(path = "/", params = {}, env = {})
         method = params.delete(:method) || "GET"
         env = { "HTTP_VERSION" => "1.1", "REQUEST_METHOD" => method }.merge(env)

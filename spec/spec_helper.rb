@@ -10,7 +10,9 @@ require "rubygems"
 require "rack"
 require "with_model"
 
-SimpleCov.start
+SimpleCov.start do
+  add_filter "/spec/"
+end
 
 require "auther"
 require "auther/util/encryption"
@@ -18,6 +20,10 @@ require "auther/util/encryption"
 ActiveRecord::Base.establish_connection adapter: "sqlite3", database: ":auther:"
 
 Dir[File.join(File.dirname(__FILE__), "helpers", "**/*.rb")].each do |f|
+  require f
+end
+
+Dir[File.join(File.dirname(__FILE__), "helpers", "strategies", "**/*.rb")].each do |f|
   require f
 end
 
