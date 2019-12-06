@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe Auther::Resource do
+RSpec.describe Auther::Model::Resource do
   class User
-    include Auther::Resource
+    include Auther::Model::Resource
   end
 
   let(:user) { User.new }
@@ -12,7 +12,7 @@ RSpec.describe Auther::Resource do
       it "returns password_cant_be_nil error" do
         result = user.set_password(nil)
         expect(result.failure?).to be(true)
-        expect(result.failure.type).to eq(Auther::Resource::ERROR_PASSWORD_CANT_BE_NIL)
+        expect(result.failure.type).to eq(Auther::Model::Resource::ERROR_PASSWORD_CANT_BE_NIL)
       end
     end
 
@@ -20,7 +20,7 @@ RSpec.describe Auther::Resource do
       it "returns password_is_too_long error" do
         result = user.set_password("a" * 73)
         expect(result.failure?).to be(true)
-        expect(result.failure.type).to eq(Auther::Resource::ERROR_PASSWORD_TO_LONG)
+        expect(result.failure.type).to eq(Auther::Model::Resource::ERROR_PASSWORD_TO_LONG)
       end
     end
 
@@ -34,7 +34,8 @@ RSpec.describe Auther::Resource do
           )
 
           expect(result.failure?).to be(true)
-          expect(result.failure.type).to eq(Auther::Resource::ERROR_INVALID_PASSWORD_CONFIRMATION)
+          expect(result.failure.type)
+            .to eq(Auther::Model::Resource::ERROR_INVALID_PASSWORD_CONFIRMATION)
 
           result = user.set_password(
             "password",
@@ -43,7 +44,8 @@ RSpec.describe Auther::Resource do
           )
 
           expect(result.failure?).to be(true)
-          expect(result.failure.type).to eq(Auther::Resource::ERROR_INVALID_PASSWORD_CONFIRMATION)
+          expect(result.failure.type)
+            .to eq(Auther::Model::Resource::ERROR_INVALID_PASSWORD_CONFIRMATION)
         end
       end
 

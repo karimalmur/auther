@@ -84,7 +84,7 @@ RSpec.describe ::Auther::Authentication::Strategies::PasswordStrategy do
 
     context "when resource is found" do
       class User
-        include Auther::Resource
+        include Auther::Model::Resource
 
         attr_accessor :email
       end

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe ::Auther::Confirmable do
+RSpec.describe ::Auther::Model::Confirmable do
   class User
-    include Auther::Confirmable
+    include Auther::Model::Confirmable
   end
 
   let(:user) { User.new }
@@ -24,7 +24,8 @@ RSpec.describe ::Auther::Confirmable do
       it "returns invalid_confirmation_token error" do
         result = user.confirm("invalid token")
         expect(result.failure?).to be(true)
-        expect(result.failure.type).to eq(::Auther::Confirmable::ERROR_INVALID_CONFIRMATION_TOKEN)
+        expect(result.failure.type)
+          .to eq(::Auther::Model::Confirmable::ERROR_INVALID_CONFIRMATION_TOKEN)
       end
 
       context "when confirmation_token is not set or provided token is nil" do
@@ -35,7 +36,8 @@ RSpec.describe ::Auther::Confirmable do
         it "returns invalid_confirmation_token error" do
           result = user.confirm(nil)
           expect(result.failure?).to be(true)
-          expect(result.failure.type).to eq(::Auther::Confirmable::ERROR_INVALID_CONFIRMATION_TOKEN)
+          expect(result.failure.type)
+            .to eq(::Auther::Model::Confirmable::ERROR_INVALID_CONFIRMATION_TOKEN)
         end
       end
     end
@@ -55,7 +57,8 @@ RSpec.describe ::Auther::Confirmable do
       it "returns expired_confirmation_token error" do
         result = user.confirm(user.confirmation_token)
         expect(result.failure?).to be(true)
-        expect(result.failure.type).to eq(::Auther::Confirmable::ERROR_EXPIRED_CONFIRMATION_TOKEN)
+        expect(result.failure.type)
+          .to eq(::Auther::Model::Confirmable::ERROR_EXPIRED_CONFIRMATION_TOKEN)
       end
     end
 
@@ -65,7 +68,8 @@ RSpec.describe ::Auther::Confirmable do
       it "returns resource_already_confirmed error" do
         result = user.confirm(user.confirmation_token)
         expect(result.failure?).to be(true)
-        expect(result.failure.type).to eq(::Auther::Confirmable::ERROR_RESOURCE_ALREADY_CONFIRMED)
+        expect(result.failure.type)
+          .to eq(::Auther::Model::Confirmable::ERROR_RESOURCE_ALREADY_CONFIRMED)
       end
     end
 
