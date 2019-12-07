@@ -10,6 +10,10 @@ module Auther
     yield(configuration)
   end
 
+  def self.token_options
+    configuration.token_options
+  end
+
   class Configuration
     attr_accessor :resource_identifiers, :secret_key, :encryption_cost,
                   :confirmation_epxpiry_period_seconds, :token_options
@@ -30,7 +34,7 @@ module Auther
 
   class TokenConfig
     def self.build_options(*algorithms)
-      Struct.new(*algorithms).new(algorithms.map(&:to_s))
+      Struct.new(*algorithms).new(*algorithms.map(&:to_s))
     end
 
     NO_SIGNING = "none"
@@ -39,21 +43,24 @@ module Auther
     ECDSA = build_options(:ES256, :ES384, :ES512)
 
     # Signing algorithm, and secret key
-    attr_accessor :signing_algorithm, :secret
+    attr_accessor :algorithm, :secret
     # Issuer claim
-    attr_accessor :iss
+    attr_accessor :iss, :verify_iss, :verify_jti
     # Audience claim. Configures the default list of aud claims.
     # Audience claims provided to token encoding functions overwrite this option.
-    attr_accessor :aud
-    # Expiration Time Claim & leeway. Seconds
-    attr_accessor :exp, :leeway
+    attr_accessor :aud, :verify_aud
+    # Expiration Time Claim & expiry leeway. Seconds
+    attr_accessor :exp, :exp_leeway
 
     def initialize
-      @signing_algorithm = HMAC.HS256
-      @issuer = nil
-      @aud = []
-      @exp = 3600
-      @leeway = 30
+      @iss        = nil
+      @aud        = ""
+      @exp        = 3600
+      @algorithm  = HMAC.HS256
+      @exp_leeway = 30
+      @verify_iss = true
+      @verify_jti = true
+      @verify_aud = true
     end
   end
 end
