@@ -38,10 +38,22 @@ module Auther
     RSA = build_options(:RS256, :RS384, :RS512)
     ECDSA = build_options(:ES256, :ES384, :ES512)
 
-    attr_accessor :signing_algorithm
+    # Signing algorithm, and secret key
+    attr_accessor :signing_algorithm, :secret
+    # Issuer claim
+    attr_accessor :iss
+    # Audience claim. Configures the default list of aud claims.
+    # Audience claims provided to token encoding functions overwrite this option.
+    attr_accessor :aud
+    # Expiration Time Claim & leeway. Seconds
+    attr_accessor :exp, :leeway
 
     def initialize
       @signing_algorithm = HMAC.HS256
+      @issuer = nil
+      @aud = []
+      @exp = 3600
+      @leeway = 30
     end
   end
 end
