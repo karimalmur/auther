@@ -17,11 +17,13 @@ Gem::Specification.new do |s|
   s.add_dependency "rack", "~> 2.0", ">= 2.0.7"
 
   s.add_development_dependency "activerecord", "~> 5.0"
+  s.add_development_dependency "rack-test", "~> 1.1"
+  s.add_development_dependency "rspec", "~> 3.9"
   s.add_development_dependency "simplecov", "~> 0.17.1"
   s.add_development_dependency "sqlite3", "~> 1.4", ">= 1.4.1"
   s.add_development_dependency "with_model", "~> 2.1", ">= 2.1.2"
 
-  s.files = `git ls-files`.split("\n")
+  s.files = `git ls-files`.split("\n") - ["auther-#{s.version}.gem"]
   s.test_files    = `git ls-files -- {spec}/*`.split("\n")
   s.require_paths = ["lib"]
 end
