@@ -2,5 +2,8 @@
   "ruby.rubocop.configFilePath": "/home/dev/projects/rails/auther/.rubocop.yml",
   "cSpell.words": [
     "auther"
+  ],
+  "cSpell.ignoreWords": [
+    "rbenv"
   ]
 }

@@ -1,0 +1,12 @@
+language: ruby
+rvm:
+  - 2.6
+script:
+  - bundle exec rspec
+  - bundle exec codeclimate-test-reporter
+  - overcommit --sign
+  - overcommit --run
+addons:
+  code_climate:
+    repo_token:
+      secure: 69de178416d8db388b4f61c1a7b9ca061220abbe1eba3c76cd58b803e3d9402b
