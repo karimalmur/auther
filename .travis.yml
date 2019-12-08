@@ -4,8 +4,6 @@ rvm:
 script:
   - bundle exec rspec
   - bundle exec codeclimate-test-reporter
-  - overcommit --sign
-  - overcommit --run
 addons:
   code_climate:
     repo_token:
