@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rack", "~> 2.0", ">= 2.0.7"
 
   s.add_development_dependency "activerecord", "~> 5.0"
+  s.add_development_dependency "codeclimate-test-reporter", "~> 1.0"
   s.add_development_dependency "pry", "~> 0.12.2"
   s.add_development_dependency "rack-test", "~> 1.1"
   s.add_development_dependency "rspec", "~> 3.9"
