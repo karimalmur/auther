@@ -10,6 +10,7 @@ require "auther/authentication/authentication"
 require "auther/authentication/strategies/base"
 require "auther/authentication/strategies/password_strategy"
 require "auther/authorization/token"
+require "auther/authorization/token_manager"
 require "auther/auther"
 
 module Auther; end
